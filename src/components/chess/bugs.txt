@@ -1,0 +1,3 @@
+ FIXED 1. chess.js line 98 creates a clone element which removes all event listner 
+2.pawn can move 2 spaces even if piece in front of it
+3. when capture the capturing piece behaves like the captured until next click 

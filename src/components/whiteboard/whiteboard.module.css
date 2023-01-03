@@ -1,0 +1,88 @@
+
+.app{
+  width: 100VW;
+}
+#navbar{
+    display: flex;
+    justify-content: space-evenly;
+    top: 0;
+    width: 100%;
+    padding: .5%;
+    height: 50px;
+    background-color:#2E2D2D ;
+}
+.btn{
+    display: flex ;
+    align-items: center;
+    justify-content: center;
+    background-color: #FFFFFF;
+    border: 0;
+    border-radius: 10%;
+    color: black;
+    height: 50px;
+    width: 80px;
+
+}
+.btn:hover{
+    opacity: 80%;
+
+}
+.raise:focus {
+    box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+    transform: translateY(-0.25em);
+  }
+
+  #view{
+    position:fixed;
+    bottom: 100;
+    background-color: white;
+    overflow: scroll;
+    cursor: none;
+  }
+
+  .dropdown{
+    display: flex;
+    flex-direction: column;
+    float: left;
+    width: 300px;
+    position: absolute;
+    background-color: #454545;
+    z-index: 2;
+    align-self: center;
+  }
+  #tooldrop{
+   display: none;
+  }
+  #colordrop{
+    display: none;
+  }
+  #imagedrop{
+    display: none;
+  }
+  .ddbtn{
+    width: 25%;
+    height: 50px;
+  }
+#colorselector{
+  display: flex;
+  justify-content:center;
+
+}
+
+.coloroption{
+  width: 30px;
+  height: 30px;
+  background-color: red;
+  border: solid 2px;
+  margin: 1px;
+  border-color:gray ;
+}
+#cursor{
+  width: 5px;
+  height: 5px;
+  border: 2px solid black;
+  border-radius:50% ;
+  position: absolute;
+  z-index: 9;
+  pointer-events: none ;
+}

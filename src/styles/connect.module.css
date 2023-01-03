@@ -1,0 +1,101 @@
+#gameboard{
+    display: flex;
+    background-color: blue;
+    justify-content: center;
+    width: fit-content;
+    height: fit-content;
+    padding: 5px;
+    border-radius: 5%;
+}
+.gamespace{
+    height: 10vh;
+    width: 10vh;
+    max-width: 10vw;
+    max-height: 10vw;
+    background-color: gray;
+    border-radius: 50%;
+    border: 15px;
+    margin: 5px;
+}
+
+.column{
+    display: flex;
+    width: fit-content;
+    flex-direction: column;
+}
+
+.column:hover{
+opacity: 95%;
+background-color: #222222;
+}
+
+.column:hover .move-viewer{
+    display: none;
+    height: 10vh;
+    width: 10vh;
+    max-width: 10vw;
+    max-height: 10vw;
+    background-color: gray;
+    border-radius: 50%;
+    border: 15px;
+    margin: 5px;
+}
+.red{
+    background-color: red;
+}
+
+.yellow{
+background-color: yellow;
+}
+
+#board_container{
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    overflow-y: hidden;
+}
+.move-viewer{
+    display: none;
+}
+.move-viewer:hover{
+    display: flex;
+}
+#win_screen{
+position: absolute;
+display:flex;
+flex-direction: column;
+align-self: center;
+height: fit-content;
+width: fit-content;
+padding: 50px;
+border-radius: 5px;
+background-color: #222222;
+z-index: 1;
+}
+#menu_buttons{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+.menu_button{
+    background-color: aliceblue;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 5%;
+    border: 0;
+}
+#turn_viewer{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    justify-self: center;
+    height: fit-content;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    background-color: #222222;
+  
+}
