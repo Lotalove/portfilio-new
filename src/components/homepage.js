@@ -1,8 +1,8 @@
 import { Navbar } from "./navbar"
 import chessImg from '../images/WhitePawn.jpg' 
 import connectimg from "../images/connect4.png"
-
 import { Preview } from "./preview"
+
 export function Homepage(){
     return(
       <div id="home-page">

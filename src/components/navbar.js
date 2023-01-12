@@ -9,7 +9,9 @@ export function Navbar(props){
           <Link className="link" to="/projects">
           Projects
           </Link>
-          <p className="link">Contact</p>
+          <Link className="link" to="/contact">
+          Contact
+          </Link>
         </div>
       </div>
     )
