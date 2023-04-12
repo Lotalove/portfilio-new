@@ -2,55 +2,42 @@ import { cloneElement } from "react"
 import classes from  "./chess.module.css"
 import WhitePawn from "./pieces/whitePawn.png"
 import BlackPawn from "./pieces/blackPawn.png"
-import { Gamespace } from "./chess"
+
+
 function onBoard (x,y){
     if(x<8 && x>=0 && y>=0 && y < 8){return true}
     else return false
 }
 
 function isOccupied(gameboard,space){
-    var classList = document.getElementById(space[0].toString() + space[1].toString()).classList
-    if(classList.length > 1){
-        return [true ,classList[classList.length-1]]
+    var space = gameboard[space[0]][space[1]] 
+    if (space === 0 ) return [false,undefined]
+
        
+    if (space.props){
+        var props = Object.values(space.props)
+        if(props.length > 2){
+            console.log(classes[props[props.length-1].color])
+            return [true ,classes[props[props.length-1].color]]
+        }
+        else{
+            return [false,undefined]
+        }    
     }
-    else{
-        return [false,undefined]
-    }   
-}
 
-function causeCheck (gameboard,move,piece){
-console.log(piece)
-var pieces = []
-var color = piece.color
-var king 
-console.log(pieces)
-for(var r = 0 ; r < gameboard.length;r++){
-    for(var c = 0 ; c <gameboard.length;c++){
-        if(gameboard[r][c] !== 0 && gameboard[r][c].color !== color ) pieces.push(gameboard[r][c]) // find all pieces on the board 
-        if (gameboard[r][c].type === "King" && gameboard[r][c].color === color ) king = gameboard[r][c] //find the king in the gameboard
-    }   
-}  
-    gameboard[piece.position[0]][piece.position[1]] = 0
-    piece.position = move
-    gameboard[piece.position[0]][piece.position[1]] = piece
+    if(space.type){
+        return [true,classes[space.color]]
+    }
 
-    var results = []
-    pieces.forEach(piece=>{
-        var validMoves = piece.getValidMoves(gameboard)
-        validMoves.forEach(move=>{
-            move.push(results)
-        })
-    })
-
+    
 }
 
 function getMoveInfo(gameboard,move,piece){
 var results = {isValid:undefined, occupied:undefined , occupiedBy:undefined}
 results.isValid = onBoard(move[0],move[1]) 
- if (results.isValid === true) causeCheck(gameboard,move,piece) 
 if(results.isValid == false) return results
 var spaceOccupied = isOccupied(gameboard,move)
+//console.log(spaceOccupied)
 results.occupied = spaceOccupied[0]
 results.occupiedBy = spaceOccupied[1]
 return results
@@ -72,39 +59,9 @@ move(position){
    this.turns++  
 }
 
-filterMove(gameboard,move){
-    var pieces = []
-    var color = this.color
-    var king 
-    for(var r = 0 ; r < gameboard.length;r++){
-        for(var c = 0 ; c < gameboard.length;c++){
-            if(gameboard[r][c] !== 0 && gameboard[r][c].color !== this.color ) pieces.push(gameboard[r][c]) // find all pieces on the board 
-            if (gameboard[r][c].type === "King" && gameboard[r][c].color === color ) king = gameboard[r][c] //find the king in the gameboard
-        }   
-    }
-    console.log(pieces)
-    var originalPos = this.position
-    this.position = move
-    var responses = [] 
-    pieces.forEach(piece =>{
-        var validMoves =  piece.getValidMoves(gameboard)
-        validMoves.forEach(move=>{
-            move.push(responses)
-        })
-    })
-
-    responses.forEach(move=>{
-            if (move[0] == king.position[0] && move[1] == king.position[1] ) return false  
-    })
-
-    this.position = originalPos 
-    return true
-}
-
-
 
 getValidMoves(gameboard){
-if(this.Captured == true) return []
+if(this.captured === true) return []
 switch(this.type){
     case "Pawn":
          var moves = this.getPawnMoves(gameboard)            
@@ -125,6 +82,7 @@ switch(this.type){
         var moves = this.getKingMoves(gameboard)
         break
 }
+
     return moves
 }
 
@@ -209,6 +167,7 @@ getRookMoves(gameboard){
         }
                 return moves
             }
+
 getBishiopMoves(gameboard){
     var moves = []
     
@@ -299,7 +258,6 @@ getKingMoves(gameboard){
     Potentialmoves.forEach((move,index)=>{
         if(move[2].isValid && move[2].occupiedBy !== classes[this.color]) moves.push([move[0],move[1]])
     })
-
     return moves
 }
 }

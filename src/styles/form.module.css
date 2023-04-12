@@ -1,12 +1,38 @@
-input[type=text] {
-    width: 20vw;
-    height: 10vh;
-    padding: 12px 20px;
+input[type=email] {
+    width: 90vw;
+    height: 6vh;
     margin: 8px 0;
     box-sizing: border-box;
+    font-size: large;
+  }
+  
+  input[type=text] {
+    width: 90vw;
+    height: 50vh;
+    margin: 8px 0;
+    
+    font-size: medium;
+  }
+#pageHeading{
+    text-align: center;
   }
 
+#email{
+
+  
+}
+#messsage{
+  width: 100%;
+}
+
+.label{
+  color:#61DAFB;
+  margin:0;
+}
+
 #submitButton{
+  position: relative;
+    right: 50;
     height: 100px;
     width: 200px;
     background-color: #FFFFFF;

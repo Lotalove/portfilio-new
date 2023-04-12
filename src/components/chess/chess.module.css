@@ -102,3 +102,16 @@
 #gameContainer{
     display:grid;
 }
+#win_screen{
+    position: absolute;
+    display:flex;
+    flex-direction: column;
+    justify-self: center;
+    align-self: center;
+    height: fit-content;
+    width: fit-content;
+    padding: 50px;
+    border-radius: 5px;
+    background-color: #222222;
+    z-index: 1;
+    }

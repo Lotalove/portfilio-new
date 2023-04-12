@@ -9,6 +9,7 @@ import EraserIcon from "./icons/eraser.png"
 import File from "./icons/folder.png"
 import { Dropdown } from './menu'
 import Fingerimg from "./icons/finger.jpg"
+import { InfiniteCanvas } from 'ef-infinite-canvas';
 
 /* 
 for our implementation of the movement of drawings we will
@@ -35,23 +36,29 @@ var OperationManger= {
   CurrentColor:"#000000"
 }
 
-var colordrop = <Dropdown menu_name ={classes.colordrop} elements = {(<div id="color-selector"> 
-<div id = "#000000" style={{backgroundColor:"#000000"}} className={classes.coloroption} onClick={(event)=>{
-  OperationManger.CurrentColor = event.target.id
-}}></div>
-<div className={classes.coloroption} onClick={()=>{
-  OperationManger.CurrentColor = "#FF0000"
-}}></div>
-<div className={classes.coloroption} onClick={()=>{
-  OperationManger.CurrentColor = "#FF0000"
-}}></div>
-<div className={classes.coloroption} onClick={()=>{
-  OperationManger.CurrentColor = "#FF0000"
-}}></div>
-<div className={classes.coloroption} onClick={()=>{
-  OperationManger.CurrentColor = "#FF0000"
-}}></div>
-</div>)} />
+function Colorselector(){
+  return(
+    <Dropdown menu_name ={classes.colordrop} elements = {(
+      <div id={classes.colorselector}> 
+      <div id = "#000000" style={{backgroundColor:"#000000"}} className={classes.coloroption} onClick={(event)=>{
+        OperationManger.CurrentColor = event.target.id
+      }}></div>
+      <div className={classes.coloroption} onClick={()=>{
+        OperationManger.CurrentColor = "#FF0000"
+      }}></div>
+      <div className={classes.coloroption} onClick={()=>{
+        OperationManger.CurrentColor = "#FF0000"
+      }}></div>
+      <div className={classes.coloroption} onClick={()=>{
+        OperationManger.CurrentColor = "#FF0000"
+      }}></div>
+      <div className={classes.coloroption} onClick={()=>{
+        OperationManger.CurrentColor = "#FF0000"
+      }}></div>
+      </div>)} />
+      
+  )
+}
 
 var toolDrop = (
   <Dropdown menu_name = {classes.tooldrop}  elements ={(
@@ -65,10 +72,10 @@ var toolDrop = (
      <button  onClick = {()=>{
       OperationManger.CurrentTool = Eraser
     
-      }} className='dd-btn'>
-        <img id="eraseer" src={EraserIcon}></img>
+      }} className={classes.ddbtn}>
+        <img id={classes.eraser} src={EraserIcon}></img>
       </button>
-      <button className='dd-btn'>
+      <button className={classes.ddbtn}>
         <img src={Bucket}></img>
       </button>
       </div>
@@ -89,9 +96,9 @@ var ImageDropdown =(
        console.log(image)
         var images = document.getElementById("uploads").files[0]
 
-            var ctx = document.getElementById("view") 
+            var ctx = document.getElementById(classes.view) 
             ctx = ctx.getContext("2d") 
-            ctx.drawImage(image,0,0,)
+            ctx.drawImage(images[0],0,0,)
           
           } 
     
@@ -148,7 +155,7 @@ toggleDropdown(menu_name){
       }}>
       <img src={Color} alt="Choose color"/>
       </button>
-      {colordrop}
+      {<Colorselector></Colorselector>}
       </div>
       </div>
     )
@@ -172,6 +179,8 @@ class CanvaView extends React.Component {
       var drawing = setInterval(()=>{ 
       ctx.beginPath()
       ctx.moveTo(p1.x,p1.y)
+      ctx.lineCap = "round"
+       //ctx.lineJoin = 'round'
       ctx.lineTo(OperationManger.CurentPosition.x ,OperationManger.CurentPosition.y )
       ctx.lineWidth = OperationManger.strokeWidth 
       ctx.strokeStyle = OperationManger.CurrentColor

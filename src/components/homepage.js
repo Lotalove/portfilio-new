@@ -1,6 +1,8 @@
 import { Navbar } from "./navbar"
 import chessImg from '../images/WhitePawn.jpg' 
 import connectimg from "../images/connect4.png"
+import boardImage from "../images/whiteboard.jpg"
+import hourGlass from "../images/hourglass.jpg"
 import { Preview } from "./preview"
 
 export function Homepage(){
@@ -36,7 +38,8 @@ export function Homepage(){
         <div id="showcase">
         <Preview name="Chess" img ={chessImg} link="/projects/chess"></Preview>
         <Preview name="Connect Four" img={connectimg} link="/projects/connect4"></Preview>
-        <Preview></Preview>
+        <Preview name="Whiteboard" img={boardImage} link="/projects/whiteboard"></Preview>
+        <Preview name="Timer" img={hourGlass} link="/projects/timer"></Preview>
         </div>
         </div>
       )

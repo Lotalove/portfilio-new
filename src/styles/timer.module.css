@@ -1,0 +1,41 @@
+#mainContainer{
+    display: flex;
+    flex-direction: row;
+    background-color: #007070;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    ;
+}
+
+.subContainer{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+}
+.timeUnit{
+    align-self: center;
+    justify-self: center;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    font-size: 3rem;
+}
+.arrowIcon{
+    width: 64px;
+    cursor: pointer;
+}
+.hour{
+    
+    color: white;
+}
+.minute{
+    color: white;
+}
+.second{
+    color: white;
+}
+.divider{
+    align-self: center;
+    font-size: 2rem;
+}

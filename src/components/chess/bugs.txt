@@ -1,0 +1,12 @@
+add end game screen DONE
+add castling
+add pawn promotion Done
+fix "sound engine" DONE
+fix menu buttons
+
+rook positions for castling are black: 00 07 ,  white:70 77
+cant castle if in check or goes through check 
+
+paragraph:
+brief description age where live , study are, graduation year,
+ experience,intrests (embedded systems)

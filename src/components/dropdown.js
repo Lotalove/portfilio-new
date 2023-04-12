@@ -13,8 +13,8 @@ export function Menu (){
             <img id="burger-menu" src={MenuIcon}></img>
             <div id="expanded-menu">
                 <Link to="/"><p>Home</p></Link>
-                <Link to="/games"><p>Projects</p> </Link>
-                <Link to="/"><p>Contact</p></Link>
+                <Link to="/projects"><p>Projects</p> </Link>
+                <Link to="/contact"><p>Contact</p></Link>
             </div>
         </div>
     )
