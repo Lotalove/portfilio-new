@@ -115,12 +115,11 @@ function Segment (props) {
             decTime("minute")
         }
         if(unit === "minute" && units_of_time < 0){
-            units_of_time =59
+            units_of_time = 59
             decTime("second")
         }
         if(unit === "second" && units_of_time < 0){
-            units_of_time =59
-            
+            units_of_time = 59
         }
         
         mode.innerHTML = units_of_time <10 ? "0"+units_of_time : units_of_time
