@@ -1,6 +1,6 @@
 import classes from "../styles/connect.module.css"
 import React, { useState } from "react"
-import { Menu } from "./dropdown"
+import { Navbar } from "./navbar"
 
 var boardMatrix =[ 
     [0,0,0,0,0,0,0],
@@ -128,7 +128,7 @@ export function Gameboard (props){
 
     return(
         <div style={{overflowY :"hidden", height:"90vh"}}>
-            <Menu></Menu> 
+            <Navbar></Navbar> 
             <TurnView turn={turn}></TurnView>
             <div id={classes.board_container}>
                 <div id={classes.gameboard}> 
@@ -184,7 +184,7 @@ function WinScreen (props){
     return(
         
         <div id = {classes.win_screen} style={{display:visible=== true? "flex":"none"}}>
-            <p><span style={{color:props.winner=='connect_red__mNsoC'? "red":"yellow"}}>{props.winner=='connect_red__mNsoC'? "Red":"Yellow"}</span> is the winner !</p>
+            <p><span style={{color:props.winner==classes.red? "red":"yellow"}}>{props.winner==classes.red? "Red":"Yellow"}</span> is the winner !</p>
             <div id={classes.menu_buttons}>
             <button className={classes.menu_button} onClick={props.resetFunction}>Restart</button>
             <button className={classes.menu_button} onClick={()=>{setVisibility(false)}}>View Board</button>

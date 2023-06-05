@@ -1,5 +1,5 @@
 body{
-  background-color:#242424 ;
+  background-color:#242222 ;
   font-family:"Hind Siliguri";
   color: white;
  margin: 0;
@@ -83,10 +83,17 @@ background-color:#1E1E1E ;
   background-size:cover;
   background-position: center;
   border-radius: 10px;
-   margin: 10px;
+  border: none;
+  margin: 10px;
+  transition: ease-in .15s;
+  }
+.preview:hover{
+  border: white medium solid;
+  transform: translateY(-10%);
+  
 }
 .previewtitle{
-
+  margin: 0;
 }
 @media only screen and (max-width: 600px) {
   #burger-menu{
@@ -118,31 +125,14 @@ background-color:#1E1E1E ;
     height: 45vh;
     margin: 0;
     margin-bottom: 5%;
-   
+    background-position: center;
   }
-  
+  .preview:hover{ 
+    border: white medium solid;
+  } 
 }
 
-#menu{
-width: .05vw;
-max-width: 64px;
-max-height: 48px;
-padding: 10px;
-text-decoration: none;
-}
 
-#expanded-menu{
-  display: none;
-  width: fit-content;
-  height: fit-content;
-  padding: 25px;
-  background-color: #343434;
-  position: absolute;
-  font-size: 32px;
-  text-decoration: none;
-  border-radius: 3%;
-  z-index: 2;
-}
 a{text-decoration: none;}
 a:visited{
   text-decoration: none;

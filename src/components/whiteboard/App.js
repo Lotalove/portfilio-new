@@ -122,7 +122,6 @@ toggleDropdown(menu_name){
   
   var menu = document.getElementById(menu_name)
   menu.style.display = getComputedStyle(menu).display == "none"?"flex":"none"
-  console.log(menu.style.display)
 }
   render(){
     return(

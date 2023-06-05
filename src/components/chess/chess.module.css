@@ -5,6 +5,7 @@
     grid-template-rows:repeat(8,auto) ;
     justify-content: center;
     position: relative;
+    z-index: 1;
 }
 
 #page{

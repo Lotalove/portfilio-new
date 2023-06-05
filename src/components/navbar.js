@@ -1,19 +1,43 @@
 import { Link } from "react-router-dom"
 import '../styles/App.css';
+import classes from "../styles/navbar.module.css"
 import logo from "../images/logo.jpg"
+import { useState } from "react";
+import MenuIcon from "../images/Menu.png"
+
 export function Navbar(props){
     return(
-      <div id="navbar">
+      <div id={classes.navbar}>
         <Link to="/" className="logo"><img style={{width:"64px", alignSelf:"center"}}src={logo}/></Link>
-        <div className="links">
-          <Link className="link" to="/">Home</Link>
-          <Link className="link" to="/projects">
-          Projects
-          </Link>
-          <Link className="link" to="/contact">
-          Contact
-          </Link>
-        </div>
+        
+        <Menu/>
       </div>
     )
     }
+
+function Menu(){    
+  var [toggled,setToggled] = useState(false)
+    var expandedMenu = <div id={classes.expandedMenu}>
+    <Link to="/"><p className={classes.link}>Home</p></Link>
+    <Link className={classes.links} to="/projects"><p className={classes.link}>Projects</p> </Link>
+    <Link className={classes.links}to="/contact"><p className={classes.link}>Contact</p></Link>
+  </div>
+      return(
+          <div onClick={async()=>{
+            if(toggled === true){
+              var dropdown = document.getElementById(classes.expandedMenu)
+              dropdown.animate([{transform: "translate(0)"},{transform: "translatex(100%)"}],{duration:500,iterations:1})
+              setTimeout(()=>{
+                setToggled(false)
+              },400)
+              
+            }
+            else setToggled(true)
+              }} id={classes.menu} >
+              <img id={classes.burgerMenu}src={MenuIcon}></img>
+              {toggled === true ? expandedMenu : null}
+              
+          </div>
+      )
+ }
+ 

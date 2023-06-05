@@ -1,0 +1,75 @@
+#navbar{
+  width: 100vw;
+  height:8vh;
+  position:sticky;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #1e1e1e; ;
+  }
+.links{
+    display: flex;
+    justify-content: space-between;
+}
+
+.link:hover{
+    color: #61DAFB;
+    transform: scale(1.2);
+}
+
+#menu{
+  display: flex;
+  flex-direction: column;
+  padding-right: 3rem;
+  justify-content: space-between;
+  width: 3rem;
+  overflow-y: visible;
+}
+#expandedMenu{
+  height: fit-content;
+  overflow-x:visible;
+  background-color: #1e1e1e;
+  margin: 3vh;
+  align-self: center;
+  padding-right:3rem ;  
+  padding-left:3rem ; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  animation: .5s ease-in 0s 1 slideInFromLeft;
+}
+
+
+
+.link{
+ font-size:x-large; 
+ align-self: center;
+ justify-self: center;
+}
+#burgerMenu{
+      position: relative;
+      align-self: center;
+      top: 2vh;
+      width: 3rem;
+      z-index: 3;
+      max-height: 8vh;
+    }
+
+    @keyframes slideInFromLeft {
+      0% {
+          transform: translateX(100%);
+      }
+      100% {
+          transform: translateX(0);
+      }
+  }
+  @keyframes slidetoRight {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+

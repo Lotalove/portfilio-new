@@ -1,9 +1,9 @@
 import classes from  "./chess.module.css"
-import { Menu } from "../dropdown"
+import { Navbar } from "../navbar"
 import React, { PureComponent, useState} from "react"
 import {Piece} from "./pieces"
 import whitePawn from "./pieces/whitePawn.png"
-import blackPawn from "./pieces/blackPawn.png"
+import blackPawnLogo from "./pieces/bPLogo.png"
 import CheckMoveAudio from "./checkmove.wav"
 import moveAudio from "./move.wav"
 
@@ -79,7 +79,7 @@ function copyArray(arr){
     var [inCheck,setCheck] = useState(false)
     return(
         <div id={classes.page}>
-            <Menu></Menu>
+            <Navbar/>
             <Turndisplay turn={turn} Check = {inCheck}></Turndisplay>
             <Chessboard turn = {turn} setTurn={setTurn} setCheck ={setCheck}></Chessboard>
         </div>
@@ -87,7 +87,7 @@ function copyArray(arr){
 }
 
 function Turndisplay(props){
-    var highlight = props.Check === false? {border:"medium solid white"}: {border:"medium solid red"}
+    var highlight = props.Check === false? {border:"medium solid #61DAFB"}: {border:"medium solid red"}
     return(
         <div id={classes.turnDisplay}>
             <div className={classes.leftMenu}>
@@ -101,7 +101,7 @@ function Turndisplay(props){
     
             <img
             style={props.turn % 2 !== 0? highlight:null} 
-            src={blackPawn}>
+            src={blackPawnLogo}>
             </img>
             </div>
         </div>
