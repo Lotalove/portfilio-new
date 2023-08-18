@@ -1,13 +1,14 @@
 
 #board{
   background-color: #FFFFFF;
-  cursor: none;
-  overflow: hidden;
   z-index: 1;
-  
+  margin:0;
+  position: static;
+  min-width: fit-content;
 }
 .app{
   width: 100VW;
+  height: 100vh;
   font-family:"Roboto";
   min-width: 500px;
   overflow: hidden;

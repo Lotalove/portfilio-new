@@ -132,7 +132,7 @@ function Canvas(){
   } 
   return(
     <div>
-    <canvas id={classes.board} width ={1920} height={1080}onMouseDown={()=>{
+    <canvas id={classes.board} width ={window.innerWidth} height={window.innerHeight} onMouseDown={()=>{
       OperationHandler()
     }} 
     onMouseMove={(event)=>{

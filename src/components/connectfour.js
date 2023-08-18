@@ -19,7 +19,7 @@ export function Gameboard (props){
         for(var row = 5;row >= 0 ; row-- ){
             if(boardMatrix[row][position]._owner.child.stateNode.classList.length === 1){
                 boardMatrix[row][position]._owner.child.stateNode.classList.add(turn %2 === 0 ? classes.red:classes.yellow)
-                await setTurn(turn+=1)
+                setTurn(turn+=1)
                isWinner([row,position])
                break  
             }
