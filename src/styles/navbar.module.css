@@ -7,6 +7,7 @@
   flex-direction: row;
   justify-content: space-between;
   background-color: #1e1e1e; ;
+  z-index: 1;
   }
 .links{
     display: flex;
@@ -66,6 +67,7 @@
   }
   @keyframes slidetoRight {
     0% {
+        
         transform: translateX(0);
     }
     100% {

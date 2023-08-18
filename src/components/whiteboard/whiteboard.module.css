@@ -1,15 +1,81 @@
-
+html{
+  overflow: hidden;
+  min-height: fit-content;
+}
+#board{
+  background-color: #FFFFFF;
+  cursor: none;
+  overflow: hidden;
+  z-index: 1;
+  
+}
 .app{
   width: 100VW;
+  font-family:"Roboto";
+  min-width: 500px;
+  overflow: hidden;
+  
 }
-#navbar{
-    display: flex;
-    justify-content: space-evenly;
-    top: 0;
-    width: 100%;
-    padding: .5%;
-    height: 50px;
-    background-color:#2E2D2D ;
+#textSettings{
+  margin-top: 16px;
+  position: absolute;
+  display: flex;
+  top:0;
+  right: 50vw;
+  background-color: #242222;
+  padding:1.5%;
+  border-radius: 10px;
+}
+.menusContainer{
+  display: flex;
+  flex-direction:row;
+  position: absolute;
+  top: 25vh;
+  left: 0;
+  margin-left: 16px;
+}
+.menu{
+  display: flex;
+  flex-direction: column  ;
+  background-color: #242222;
+  padding:32px;
+  border-radius: 10px;
+  height: fit-content;
+  width: fit-content;
+}
+#mainMenu{
+
+}
+#toolContainer{
+  display: flex;
+  flex-direction: row;
+  margin-left: 8px;
+  
+  height: fit-content;
+  
+}
+#toolMenu{
+  height: fit-content;
+  align-self: center;
+  padding: 8px;
+  display: flex;
+  flex-direction:column ;
+}
+#pencilMenu{
+margin-left: 8px;
+padding: 16px;
+padding-top: 8px;
+}
+
+#menuIcons{
+  align-self: center;
+  margin-bottom: 32px;
+}
+
+.selected{
+  padding: 5px;
+  border: medium solid white;
+  border-radius: 10px;  
 }
 .btn{
     display: flex ;
@@ -33,7 +99,6 @@
   }
 
   #view{
-    position:fixed;
     bottom: 100;
     background-color: white;
     overflow: scroll;
@@ -43,42 +108,85 @@
   .dropdown{
     display: flex;
     flex-direction: column;
-    float: left;
-    width: 300px;
+    width: fit-content;
+    min-height: 0;
+    background-color: #242222;
+    align-self: center;
+    border-radius:5%;
+  }
+  .dropdownContent{
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+    transition: grid-template-rows 200ms;
     position: absolute;
-    background-color: #454545;
-    z-index: 2;
+    margin: 0;
+    padding: 0;
     align-self: center;
   }
-  #tooldrop{
-   display: none;
+  .dropdownContent.open{
+    grid-template-rows: 1fr;
+  
   }
-  #colordrop{
-    display: none;
+  #Add{
+    color: aqua;
+    padding-right: 25px;
+   }
+   #Tool{
+    
+    padding-right: 25px;
+   }
+   #Text{
+    color: aqua;
+   }
+   #strokeWidth{
+    width: 80%;
+    align-self: center;
+    
+   }
+   .icon{
+    padding-left: 10px;
+    padding-right: 10px;
+    fill: #2E2D2D;
   }
-  #imagedrop{
-    display: none;
-  }
-  .ddbtn{
-    width: 25%;
-    height: 50px;
-  }
-#colorselector{
+   .icon:hover{
+    background-color: #2E2D2D;
+    border: medium solid gray;
+    border-radius: 5%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+   }
+   .toolBar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px;
+   }
+ 
+#colorSelector{
   display: flex;
-  justify-content:center;
+  justify-content: center;
   flex-direction: column;
 }
 .colorRow{
-
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
-.coloroption{
+
+.colorOption{
+  display:inline-block;
   width: 30px;
   height: 30px;
-  background-color: red;
-  border: solid 2px;
-  margin: 1px;
-  border-color:gray ;
+  margin: 2%;
+  border-radius: 50%;
+  cursor:pointer;
+  
+}
+.colorOption:hover{
+  border: medium solid;
+  border-color:white ;
 }
 #cursor{
   width: 5px;
@@ -88,4 +196,36 @@
   position: absolute;
   z-index: 9;
   pointer-events: none ;
+  
+}
+
+.select{
+  width: max-content;
+  background-color:white;
+  border:none;
+  padding: .5rem;
+  border-radius: 5px;
+  margin: .5rem;
+}
+#pageNav{
+  position: absolute;
+  bottom: 0;
+  left: 50vw;
+  color: red;
+}
+
+#textBox{
+  position: absolute;
+  height: fit-content;
+  width: fit-content;
+  color: #242222;
+  z-index: 5;
+ display: flex;
+ flex-direction: column;
+ background-color: transparent;
+ cursor:text;
+}
+
+#closeTextbox{
+  align-self: flex-end;
 }

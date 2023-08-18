@@ -4,8 +4,8 @@
     grid-template-columns:repeat(8,auto) ;
     grid-template-rows:repeat(8,auto) ;
     justify-content: center;
-    position: relative;
-    z-index: 1;
+    position:sticky;
+    z-index: 0;
 }
 
 #page{

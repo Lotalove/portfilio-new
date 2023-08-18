@@ -16,6 +16,9 @@ flex-direction: row;
 justify-content: space-between;
 background-color:#1E1E1E ;
 }
+svg:hover{
+  transform: translateY(-5px);
+}
 .logo{
   display: flex;
   color:#61DAFB ;

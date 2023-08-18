@@ -6,13 +6,6 @@ input[type=email] {
     font-size: large;
   }
   
-  input[type=text] {
-    width: 90vw;
-    height: 50vh;
-    margin: 8px 0;
-    
-    font-size: medium;
-  }
 #pageHeading{
     text-align: center;
   }
