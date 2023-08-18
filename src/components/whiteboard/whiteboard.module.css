@@ -1,7 +1,4 @@
-html{
-  overflow: hidden;
-  min-height: fit-content;
-}
+
 #board{
   background-color: #FFFFFF;
   cursor: none;

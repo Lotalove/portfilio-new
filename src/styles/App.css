@@ -2,20 +2,11 @@ body{
   background-color:#242222 ;
   font-family:"Hind Siliguri";
   color: white;
- margin: 0;
- overflow-y: scroll;
+  margin: 0;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+}
 
-}
-#navbar{
-width: 100vw;
-height: fit-content;
-position:sticky;
-top: 0;
-display: flex;
-flex-direction: row;
-justify-content: space-between;
-background-color:#1E1E1E ;
-}
 svg:hover{
   transform: translateY(-5px);
 }
@@ -136,7 +127,9 @@ svg:hover{
 }
 
 
-a{text-decoration: none;}
+a{
+  color: inherit;
+  text-decoration: none;}
 a:visited{
   text-decoration: none;
   color: inherit;
