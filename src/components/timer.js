@@ -1,6 +1,6 @@
 import classes from "../styles/timer.module.css"
-import {ReactComponent as Arrow} from "../images/Arrow.svg"
-import downarrow from '../images/timerimage/down-arrow.png'
+import {ReactComponent as Arrow} from "../images/timerimage/arrow.svg"
+import {ReactComponent as DownArrow} from '../images/timerimage/downarrow.svg'
 import uparrow from '../images/timerimage/up-arrow.png'
 import alarmSound from "./sounds/alarm.mp3" 
 import {Navbar} from "./navbar"
@@ -57,8 +57,9 @@ function Time (props){
         else{
             document.getElementById(classes.minute).innerHTML = "00"
         }
-        document.getElementById(classes.second).innerHTML = remaining_seconds
-        } ,1000)
+        if(remaining_seconds >=10) document.getElementById(classes.second).innerHTML = remaining_seconds
+        else document.getElementById(classes.second).innerHTML = "0" + remaining_seconds    
+    } ,1000)
         document.getElementById(classes.startButton).style.display = "none"
         document.getElementById(classes.pauseButton).style.display = "flex"
         var arrows = document.getElementsByClassName(classes.arrow)
@@ -129,7 +130,7 @@ function Segment (props) {
         <div className={classes.subContainer}>
         <Arrow className ={classes.arrow + " " + classes.arrowUp} onClick={()=>{addTime(props.name)}} />
         <p id={classes[props.name]} className={classes.timeUnit}>00</p>
-        <Arrow className ={classes.arrow + " " + classes.arrowDown} onClick={()=>{decTime(props.name)}} />
+        <DownArrow className ={classes.arrow + " " + classes.arrowDown} onClick={()=>{decTime(props.name)}} />
     </div>
     )
 }

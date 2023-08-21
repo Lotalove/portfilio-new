@@ -7,9 +7,7 @@ body{
   -webkit-overflow-scrolling: touch;
 }
 
-svg:hover{
-  transform: translateY(-5px);
-}
+
 .logo{
   display: flex;
   color:#61DAFB ;

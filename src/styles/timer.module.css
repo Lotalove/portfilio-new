@@ -66,10 +66,7 @@ display: flex;
     cursor: pointer;
 }
 
-.arrowDown{
-    transform: rotate(180deg);
-    
-}
+
 .hour{
     
     color: white;
@@ -95,6 +92,13 @@ font-size: 2rem;
 transition: ease-in-out;
 display: flex;
 justify-content: center;
+}
+.arrow:hover{
+  transform: translateY(-5px);
+}
+.arrowDown:hover{
+  transform: translateY(+5px);
+  transform: rotate(180deg),
 }
 #startButton{
     background-color: #3263E1;
