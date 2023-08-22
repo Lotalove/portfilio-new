@@ -87,7 +87,8 @@ function TextBox(props){
 
 function Canvas(){
   var [TextBoxes,setBox] = useState(null)
-  function OperationHandler(){
+  function OperationHandler(event){
+    
     switch (OperationManager.CurrentTool){
       case "pencil":
         var p1 = OperationManager.CurentPosition
@@ -105,21 +106,28 @@ function Canvas(){
         p1 = OperationManager.CurentPosition
          
         },0)
-        document.addEventListener("mouseup",()=>{clearInterval(drawing)})
+        
+        document.addEventListener("pointerup",()=>{clearInterval(drawing)})
       break ;
       case "eraser": 
-        var p1 = OperationManager.CurentPosition
-        var ctx =  document.getElementById(classes.board)
-        ctx = ctx.getContext("2d")
-        var drawing = setInterval(()=>{
-        ctx.beginPath()
-        ctx.arc(OperationManager.CurentPosition.x,OperationManager.CurentPosition.y,OperationManager.strokeWidth/Math.PI,0,2*Math.PI,false)
-        ctx.strokeStyle="#FFFFFF"
-        ctx.fillStyle="#FFFFFF"
-        ctx.stroke()
-        ctx.fill()
+      var p1 = OperationManager.CurentPosition
+      var ctx = document.getElementById(classes.board) 
+      ctx = ctx.getContext("2d") 
+      var drawing = setInterval(()=>{ 
+      ctx.beginPath()
+      ctx.moveTo(p1.x,p1.y)
+      ctx.lineCap = "round"
+       ctx.lineJoin = 'round'
+      ctx.lineTo(OperationManager.CurentPosition.x ,OperationManager.CurentPosition.y )
+      ctx.lineWidth = OperationManager.strokeWidth 
+      ctx.strokeStyle = "#FFFFFF"
+      ctx.stroke()
+      p1 = OperationManager.CurentPosition
+       
         },0)
-        document.addEventListener("mouseup",()=>{clearInterval(drawing)
+        document.addEventListener("mouseup",()=>{
+          
+          clearInterval(drawing)
         })
         break;
       case "text":
@@ -130,18 +138,37 @@ function Canvas(){
        
       }
   } 
+  
+
   return(
     <div>
-    <canvas id={classes.board} width ={window.innerWidth} height={window.innerHeight} onMouseDown={()=>{
-      OperationHandler()
-    }} 
-    onMouseMove={(event)=>{
+    <canvas id={classes.board} width ={window.innerWidth} height={window.innerHeight} onPointerDown={(event)=>{
       var cursor = document.getElementById(classes.cursor)
       cursor.style.width = OperationManager.strokeWidth + "px"
       cursor.style.height = OperationManager.strokeWidth + "px"
       cursor.style.top = event.nativeEvent.clientY-(OperationManager.strokeWidth/2) +"px"
       cursor.style.left  = event.nativeEvent.clientX-(OperationManager.strokeWidth/2) + "px"
-      OperationManager.CurentPosition = {x:event.nativeEvent.layerX,y:event.nativeEvent.layerY}}}
+      OperationManager.CurentPosition = {x:event.nativeEvent.layerX,y:event.nativeEvent.layerY}
+      OperationHandler(event)
+    }} 
+    onPointerMove={(event)=>{
+      var cursor = document.getElementById(classes.cursor)
+      cursor.style.width = OperationManager.strokeWidth + "px"
+      cursor.style.height = OperationManager.strokeWidth + "px"
+      cursor.style.top = event.nativeEvent.clientY-(OperationManager.strokeWidth/2) +"px"
+      cursor.style.left  = event.nativeEvent.clientX-(OperationManager.strokeWidth/2) + "px"
+      OperationManager.CurentPosition = {x:event.nativeEvent.layerX,y:event.nativeEvent.layerY}
+    }}
+      onTouchMove={(event)=>{
+        
+      var cursor = document.getElementById(classes.cursor)
+      cursor.style.width = OperationManager.strokeWidth + "px"
+      cursor.style.height = OperationManager.strokeWidth + "px"
+      cursor.style.top = event.nativeEvent.clientY-(OperationManager.strokeWidth/2) +"px"
+      cursor.style.left  = event.nativeEvent.clientX-(OperationManager.strokeWidth/2) + "px"
+      OperationManager.CurentPosition = {x:event.nativeEvent.layerX,y:event.nativeEvent.layerY}
+      
+      }}
 >     
       
     </canvas>
@@ -154,7 +181,7 @@ export function Whiteboard () {
   var [page,setPage] = useState(0)
   var pages =[<Canvas/>,<Canvas/>]
     return (
-      <div className={classes.app}>
+      <div scroll="no" className={classes.app}>
         <Menu operationManager={OperationManager}></Menu>
       <div id={classes.cursor}></div>
       {pages[page]}

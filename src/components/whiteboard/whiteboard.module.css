@@ -5,14 +5,15 @@
   margin:0;
   position: static;
   min-width: fit-content;
+  display: block;
+  touch-action: none;
+  user-zoom: none;
 }
+
 .app{
-  width: 100VW;
-  height: 100vh;
   font-family:"Roboto";
-  min-width: 500px;
   overflow: hidden;
-  
+  user-select: none;
 }
 #textSettings{
   margin-top: 16px;
@@ -24,6 +25,7 @@
   padding:1.5%;
   border-radius: 10px;
 }
+@media only screen and (min-width: 768px) {
 .menusContainer{
   display: flex;
   flex-direction:row;
@@ -40,17 +42,11 @@
   border-radius: 10px;
   height: fit-content;
   width: fit-content;
-}
-#mainMenu{
-
-}
-#toolContainer{
-  display: flex;
-  flex-direction: row;
-  margin-left: 8px;
   
-  height: fit-content;
-  
+}
+#menuIcons{
+  align-self: center;
+  margin-bottom: 32px;
 }
 #toolMenu{
   height: fit-content;
@@ -59,16 +55,63 @@
   display: flex;
   flex-direction:column ;
 }
-#pencilMenu{
-margin-left: 8px;
-padding: 16px;
-padding-top: 8px;
+
+}
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+   .menusContainer{
+      display: flex;
+      flex-direction: column-reverse;
+      bottom: 0 ;
+      position: absolute;
+      width: 100vw;
+      justify-content: center;
+  }
+  .menu{
+    display: flex;
+    flex-direction: row  ;
+    background-color: #242222;
+    border-radius: 10px;
+    width: 90%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+  }
+  #menuIcons{
+    margin-bottom: 0px;
+  }
+  #toolMenu{
+    height: fit-content;
+    align-self: center;
+    padding: 8px;
+    display: flex;
+    flex-direction:row ;
+  }
+  #pencilMenu{
+    flex-direction: column;
+    padding: 0px;
+    width: fit-content;
+    align-self: center;
+  }
+  #toolContainer{
+    flex-direction: column-reverse;
+  }
+}
+#mainMenu{
+
+}
+#toolContainer{
+  display: flex;
+  margin-left: 8px; 
+  height: fit-content; 
 }
 
-#menuIcons{
-  align-self: center;
-  margin-bottom: 32px;
-}
+#pencilMenu{
+  margin-left: 8px;
+  padding: 16px;
+  padding-top: 8px;
+  }
+
 
 .selected{
   padding: 5px;
