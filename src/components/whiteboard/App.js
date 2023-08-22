@@ -125,7 +125,7 @@ function Canvas(){
       p1 = OperationManager.CurentPosition
        
         },0)
-        document.addEventListener("mouseup",()=>{
+        document.addEventListener("pointerup",()=>{
           
           clearInterval(drawing)
         })
