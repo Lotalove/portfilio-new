@@ -72,7 +72,6 @@ function TextBox(props){
       var ctx = document.getElementById(classes.board)
       ctx= ctx.getContext("2d")
       if (e.keyCode === 13) {
-        console.log("writing")
         var yComponent= props.top
         var xComponent = props.left 
         ctx.font =  OperationManager.FontSize+ " " + OperationManager.FontFamily;
@@ -85,10 +84,19 @@ function TextBox(props){
   )
 }
 
-function Canvas(){
+function Canvas(props){
   var [TextBoxes,setBox] = useState(null)
-  function OperationHandler(event){
+
+  function OperationHandler(event){ 
+    function finishDrawing(){
+      clearInterval(drawing)
+      document.removeEventListener("pointerup",finishDrawing)
+      var canvas = document.getElementById(classes.board)
+      canvas = canvas.toDataURL("image/png",1.0)
+      props.updateFunction(canvas)
+      
     
+    } 
     switch (OperationManager.CurrentTool){
       case "pencil":
         var p1 = OperationManager.CurentPosition
@@ -105,10 +113,10 @@ function Canvas(){
         ctx.stroke()
         p1 = OperationManager.CurentPosition
          
-        },0)
+        },0)   
+        document.addEventListener("pointerup", finishDrawing)
         
-        document.addEventListener("pointerup",()=>{clearInterval(drawing)})
-      break ;
+        break ;
       case "eraser": 
       var p1 = OperationManager.CurentPosition
       var ctx = document.getElementById(classes.board) 
@@ -125,18 +133,18 @@ function Canvas(){
       p1 = OperationManager.CurentPosition
        
         },0)
-        document.addEventListener("pointerup",()=>{
-          
-          clearInterval(drawing)
-        })
+
+        document.addEventListener("pointerup",finishDrawing)
+        
         break;
       case "text":
         var canvas =document.getElementById(classes.board)   
         var ctx = canvas.getContext("2d")
         var newBox = <TextBox top={OperationManager.CurentPosition.y} left={OperationManager.CurentPosition.x} boxSet= {setBox}></TextBox>
         setBox(newBox)
-       
+        break
       }
+
   } 
   
 
@@ -159,16 +167,6 @@ function Canvas(){
       cursor.style.left  = event.nativeEvent.clientX-(OperationManager.strokeWidth/2) + "px"
       OperationManager.CurentPosition = {x:event.nativeEvent.layerX,y:event.nativeEvent.layerY}
     }}
-      onTouchMove={(event)=>{
-        
-      var cursor = document.getElementById(classes.cursor)
-      cursor.style.width = OperationManager.strokeWidth + "px"
-      cursor.style.height = OperationManager.strokeWidth + "px"
-      cursor.style.top = event.nativeEvent.clientY-(OperationManager.strokeWidth/2) +"px"
-      cursor.style.left  = event.nativeEvent.clientX-(OperationManager.strokeWidth/2) + "px"
-      OperationManager.CurentPosition = {x:event.nativeEvent.layerX,y:event.nativeEvent.layerY}
-      
-      }}
 >     
       
     </canvas>
@@ -178,13 +176,65 @@ function Canvas(){
 }
 
 export function Whiteboard () {
-  var [page,setPage] = useState(0)
-  var pages =[<Canvas/>,<Canvas/>]
+  var canvasHistory = []
+  var undoHistory = []
+
+  var currentState = 0
+  var lastOperation 
+  var menuFunctions= {
+    undoFunction:Undo,
+    redoFunction: Redo
+  }
+
+  function historyUpdate(canvasData){
+    var Data = new Image()
+    Data.src = canvasData
+    canvasHistory.push(Data)     
+    currentState = canvasHistory.length -2
+    undoHistory = []
+  }
+
+  function Undo(){
+    var canvas = document.getElementById(classes.board)
+    canvas = canvas.getContext("2d")
+    if (currentState < 0) {
+      canvas.clearRect(0,0,window.innerWidth,window.innerHeight)
+      var undone = canvasHistory.pop()
+      if (undone !== undefined) undoHistory.push(undone)  
+        currentState = currentState -1
+      return
+    } 
+    canvas.clearRect(0,0,window.innerWidth,window.innerHeight)
+    canvas.drawImage(canvasHistory[currentState],0,0)
+    var undone = canvasHistory.pop()
+    undoHistory.push(undone)
+    currentState = currentState-1
+    
+    
+  }
+
+  function Redo(){
+    
+    if (undoHistory.length === 0) return
+    
+    var canvas = document.getElementById(classes.board)
+    canvas = canvas.getContext("2d")
+    canvas.clearRect(0,0,window.innerWidth,window.innerHeight)
+    canvas.drawImage(undoHistory[undoHistory.length-1],0,0)
+    var redone = undoHistory.pop()
+    canvasHistory.push(redone)
+    currentState= currentState + 1
+
+  }
+
     return (
       <div scroll="no" className={classes.app}>
-        <Menu operationManager={OperationManager}></Menu>
+      <Menu 
+      operationManager={OperationManager}
+      menuFunctions ={menuFunctions}
+      ></Menu>
       <div id={classes.cursor}></div>
-      {pages[page]}
+      <Canvas updateFunction= {historyUpdate}></Canvas>
       </div>
     );
   }

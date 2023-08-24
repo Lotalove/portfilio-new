@@ -66,6 +66,7 @@ export function Menu (props){
                  setTool("draw")
                  }}
                  />
+
                 <Picture 
                 className= {activeTool === "image"?styles.selected:null}
                  id={styles.menuIcons}
@@ -73,8 +74,17 @@ export function Menu (props){
                   setTool("image")
                  }}
                  />
-                <Undo id={styles.menuIcons}/>
-                <Redo/>
+
+                <Undo 
+                id={styles.menuIcons}
+                onClick={()=>{
+                  props.menuFunctions.undoFunction()}}
+                />
+                <Redo
+                onClick={()=>{
+                  props.menuFunctions.redoFunction()
+                }}
+                />
             </div>
             {activeTool === "draw"? DrawMenu:null
          
