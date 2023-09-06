@@ -10,16 +10,12 @@ import {ReactComponent as Shapes} from './icons/shapes.svg'
 import {ReactComponent as Text} from './icons/text.svg'
 import {ReactComponent as Close} from './icons/close.svg'
 import { useState } from 'react'
+import { useNavigate } from "react-router-dom";
 
-export function Menu (props){
-    var [activeTool,setTool] = useState("none") 
-    var [drawingTool, setDTool] = useState("pencil")
-    var [visibleColors,setVisibility] = useState(true)
-    function updateTool(toolName){
-      props.operationManager.CurrentTool = toolName
-      setDTool(toolName)
-    }
-    var ColorMenu= <div className={styles.menu} id ={styles.pencilMenu}>
+function ColorMenu(props){
+  var [visibility,setVisibility] = useState(true)
+  return(
+    <div className={styles.menu} id ={styles.pencilMenu} style={{display:visibility=== true?"flex":"none"}}>
     <Close onClick={()=>{
       setVisibility(false)
     }} style={{alignSelf:"flex-end"}}/>
@@ -27,38 +23,62 @@ export function Menu (props){
       props.operationManager.strokeWidth = event.target.value
     }} type="range" min={1} max={32} defaultValue={props.operationManager.strokeWidth}></input>
     <p style={{margin:"0px",marginBottom:"16px"}}>Thickness</p>
-    
     {<Colors operationManager={props.operationManager} />}
     </div>
-    var DrawMenu = <div id={styles.toolContainer} >
-      <div className={styles.menu} id={styles.toolMenu}>
-      <Pencil className= {drawingTool === "pencil"?styles.selected:null} id={styles.menuIcons} onClick={()=>{
-          updateTool("pencil")
-          setVisibility(true)
-      }}/>
-      <Eraser className= {drawingTool === "eraser"?styles.selected:null} id={styles.menuIcons} onClick={()=>{
-          updateTool("eraser")
-          setVisibility(true)
-      }}/>
-      <Text
-      className= {drawingTool === "text"?styles.selected:null}
-        id={styles.menuIcons} onClick={()=>{
-        updateTool("text")
-        setVisibility(false)
-      }}/>
-      <Shapes style={{alignSelf:"center"}} className= {drawingTool === "shapes"?styles.selected:null} onClick={()=>{
-          updateTool("shapes")
-          setVisibility(false)
-      }}/>
-      </div>
-      { visibleColors?ColorMenu:null }
-   
-      </div>
+  )
+}
 
+function DrawMenu(props){
+  var [visibleColors,setColorVisibility] = useState(true)
+  var updateTool = props.functions.updateTool
+  var drawingTool = props.functions.drawingTool
+  return(
+    <div id={styles.toolContainer} >
+        <div className={styles.menu} id={styles.toolMenu}>
+        <Pencil className= {drawingTool === "pencil"?styles.selected:null} id={styles.menuIcons} onClick={()=>{
+            updateTool("pencil") 
+            setColorVisibility(true)
+        }}/>
+        <Eraser className= {drawingTool === "eraser"?styles.selected:null} id={styles.menuIcons} onClick={()=>{
+            updateTool("eraser")
+            setColorVisibility(true)
+        }}/>
+        <Text
+        className= {props.drawingTool === "text"?styles.selected:null}
+          id={styles.menuIcons} onClick={()=>{
+          updateTool("text")
+          setColorVisibility(false)
+        }}/>
+        <Shapes style={{alignSelf:"center"}} className= {drawingTool === "shapes"?styles.selected:null} onClick={()=>{
+            updateTool("shapes")
+            setColorVisibility(false)
+        }}/>
+        </div>
+        { visibleColors === true? <ColorMenu operationManager={props.operationManager} /> :null }
+        </div>
+)
+}
+
+
+export function Menu (props){
+    var [activeTool,setTool] = useState("none") 
+    var [drawingTool, setDTool] = useState("pencil")
+    var [visibleColors,setVisibility] = useState(true)
+    const navigate = useNavigate()
+
+    function updateTool(toolName){
+      props.operationManager.CurrentTool = toolName
+      setDTool(toolName)
+    }
     return(
         <div className={styles.menusContainer}>
             <div className={styles.menu} id={styles.mainMenu}>        
-                <Home id={styles.menuIcons}/>
+                <Home 
+                id={styles.menuIcons}
+                onClick={()=>{
+                    navigate(-1)
+                }}
+                />
                 <Brush 
                 className = {activeTool === "draw"?styles.selected:null}
                  id={styles.menuIcons}
@@ -66,14 +86,22 @@ export function Menu (props){
                  setTool("draw")
                  }}
                  />
-
-                <Picture 
+                <label 
+                id={styles.imageUpload}
+                onClick={()=>{
+                  setTool("image")
+                  
+                 }}
+                
+                >
+                <input  type='file' accept="image/jpeg, image/png, image/jpg">
+                   </input>
+                   <Picture 
                 className= {activeTool === "image"?styles.selected:null}
                  id={styles.menuIcons}
-                 onClick={()=>{
-                  setTool("image")
-                 }}
-                 />
+                 ></Picture>
+                  </label>
+           
 
                 <Undo 
                 id={styles.menuIcons}
@@ -86,9 +114,8 @@ export function Menu (props){
                 }}
                 />
             </div>
-            {activeTool === "draw"? DrawMenu:null
-         
-            }  
+
+            {activeTool === "draw"?<DrawMenu operationManager={props.operationManager} functions = {{updateTool:updateTool,drawingTool:drawingTool}}/>:null}  
              
             </div>
            
@@ -96,12 +123,7 @@ export function Menu (props){
     )
 }
 
-function DrawMenu(){
-  return{
-  
 
-  }
-}
 function ColorOption(props){
    
     return(

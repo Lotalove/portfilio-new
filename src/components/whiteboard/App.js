@@ -9,7 +9,6 @@ import { Navigate, useNavigate } from 'react-router-dom'
 
 import { Menu } from './menus'
 
-
 var OperationManager = {
   CurrentTool :"pencil" ,
   strokeWidth:5 ,
@@ -55,6 +54,8 @@ var InsertDrop = <div className={classes.dropdown}>
 </div> 
 
 function TextBox(props){
+    var ypos
+    var xpos = props.position.x > window.innerWidth -128 ?window.innerWidth-200:props.position.x 
   return(
     <div >
       <div  id={classes.textSettings}>
@@ -64,20 +65,22 @@ function TextBox(props){
         <Bold />
         <Italic/>
         <Bin onClick={()=>{
-          props.boxSet(null)
+          props.textFunctions.updateOverlay(null)
         }}/>
         </div>
       </div>
-    <input id={classes.textBox}  style={{top:props.top,left:props.left}}  type='text' onKeyDown={(e)=>{
-      var ctx = document.getElementById(classes.board)
-      ctx= ctx.getContext("2d")
+    <input id={classes.textBox}  style={{top:props.position.y,left:xpos}}  type='text' onKeyDown={(e)=>{
+      
       if (e.keyCode === 13) {
-        var yComponent= props.top
-        var xComponent = props.left 
+        var ctx = document.getElementById(classes.board)
+        ctx= ctx.getContext("2d")
+        var yComponent= props.position.y
+        var xComponent = props.position.x
         ctx.font =  OperationManager.FontSize+ " " + OperationManager.FontFamily;
         ctx.fillStyle = OperationManager.CurrentColor
         ctx.fillText(e.target.value, xComponent,yComponent);
-        props.boxSet(null)        
+        props.textFunctions.updateOverlay(null)  
+        props.textFunctions.save()      
     }
     }}></input>
     </div>
@@ -85,18 +88,30 @@ function TextBox(props){
 }
 
 function Canvas(props){
-  var [TextBoxes,setBox] = useState(null)
+  var [overlayedElements,updateOverlay] = useState(null)
+
+  function drawUploaded(image){
+    var canvas = document.getElementById(classes.board)
+      canvas = canvas.getContext("2d")
+      var imageX = OperationManager.CurentPosition.x - (image.width/2)
+      var imageY = OperationManager.CurentPosition.y - (image.height/2)
+      canvas.drawImage(image,imageX,imageY)
+      saveCanvas()
+  }
+  
+  function saveCanvas(){
+    var canvas = document.getElementById(classes.board)
+    canvas = canvas.toDataURL("image/png",1.0)
+    props.updateFunction(canvas)
+  }
 
   function OperationHandler(event){ 
     function finishDrawing(){
       clearInterval(drawing)
       document.removeEventListener("pointerup",finishDrawing)
-      var canvas = document.getElementById(classes.board)
-      canvas = canvas.toDataURL("image/png",1.0)
-      props.updateFunction(canvas)
-      
-    
+      saveCanvas()
     } 
+    
     switch (OperationManager.CurrentTool){
       case "pencil":
         var p1 = OperationManager.CurentPosition
@@ -115,7 +130,6 @@ function Canvas(props){
          
         },0)   
         document.addEventListener("pointerup", finishDrawing)
-        
         break ;
       case "eraser": 
       var p1 = OperationManager.CurentPosition
@@ -138,10 +152,20 @@ function Canvas(props){
         
         break;
       case "text":
-        var canvas =document.getElementById(classes.board)   
-        var ctx = canvas.getContext("2d")
-        var newBox = <TextBox top={OperationManager.CurentPosition.y} left={OperationManager.CurentPosition.x} boxSet= {setBox}></TextBox>
-        setBox(newBox)
+        var boxPosition = {
+          x:OperationManager.CurentPosition.x,
+          y: OperationManager.CurentPosition.y
+        }
+        var textFunctions={
+          updateOverlay:updateOverlay,
+          save: saveCanvas
+        }
+        var newBox = <TextBox position={boxPosition} textFunctions={textFunctions} ></TextBox>
+        updateOverlay(newBox)
+        break
+      case "shapes":
+        console.log("drawing shape")
+        
         break
       }
 
@@ -150,27 +174,31 @@ function Canvas(props){
 
   return(
     <div>
+      {overlayedElements}
     <canvas id={classes.board} width ={window.innerWidth} height={window.innerHeight} onPointerDown={(event)=>{
-      var cursor = document.getElementById(classes.cursor)
-      cursor.style.width = OperationManager.strokeWidth + "px"
-      cursor.style.height = OperationManager.strokeWidth + "px"
-      cursor.style.top = event.nativeEvent.clientY-(OperationManager.strokeWidth/2) +"px"
-      cursor.style.left  = event.nativeEvent.clientX-(OperationManager.strokeWidth/2) + "px"
       OperationManager.CurentPosition = {x:event.nativeEvent.layerX,y:event.nativeEvent.layerY}
       OperationHandler(event)
     }} 
     onPointerMove={(event)=>{
-      var cursor = document.getElementById(classes.cursor)
-      cursor.style.width = OperationManager.strokeWidth + "px"
-      cursor.style.height = OperationManager.strokeWidth + "px"
-      cursor.style.top = event.nativeEvent.clientY-(OperationManager.strokeWidth/2) +"px"
-      cursor.style.left  = event.nativeEvent.clientX-(OperationManager.strokeWidth/2) + "px"
       OperationManager.CurentPosition = {x:event.nativeEvent.layerX,y:event.nativeEvent.layerY}
     }}
->     
-      
+
+    onDrop={(e)=>{
+      e.preventDefault()
+      const reader = new FileReader()
+      reader.addEventListener("load",()=>{
+        var imageData = reader.result 
+        var image = new Image()
+        image.src = imageData
+        drawUploaded(image)
+      })
+      var file = e.dataTransfer.files[e.dataTransfer.files.length-1]
+      reader.readAsDataURL(file)
+    }}
+    onDragOver={(e)=>{
+      e.preventDefault()
+    }}>     
     </canvas>
-    {TextBoxes}
     </div>
     )
 }
@@ -178,9 +206,7 @@ function Canvas(props){
 export function Whiteboard () {
   var canvasHistory = []
   var undoHistory = []
-
   var currentState = 0
-  var lastOperation 
   var menuFunctions= {
     undoFunction:Undo,
     redoFunction: Redo
@@ -224,7 +250,6 @@ export function Whiteboard () {
     var redone = undoHistory.pop()
     canvasHistory.push(redone)
     currentState= currentState + 1
-
   }
 
     return (
@@ -233,7 +258,6 @@ export function Whiteboard () {
       operationManager={OperationManager}
       menuFunctions ={menuFunctions}
       ></Menu>
-      <div id={classes.cursor}></div>
       <Canvas updateFunction= {historyUpdate}></Canvas>
       </div>
     );

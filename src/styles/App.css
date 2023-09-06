@@ -7,7 +7,9 @@ body{
   -webkit-overflow-scrolling: touch;
 }
 
-
+#root{
+  overflow-x: hidden;
+}
 .logo{
   display: flex;
   color:#61DAFB ;
