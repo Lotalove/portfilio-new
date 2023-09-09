@@ -13,11 +13,10 @@ import { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 
 function ColorMenu(props){
-  var [visibility,setVisibility] = useState(true)
   return(
-    <div className={styles.menu} id ={styles.pencilMenu} style={{display:visibility=== true?"flex":"none"}}>
+    <div className={styles.menu} id ={styles.pencilMenu} >
     <Close onClick={()=>{
-      setVisibility(false)
+      props.setVisibility(false)
     }} style={{alignSelf:"flex-end"}}/>
     <input onChange={(event)=>{
       props.operationManager.strokeWidth = event.target.value
@@ -54,7 +53,7 @@ function DrawMenu(props){
             setColorVisibility(false)
         }}/>
         </div>
-        { visibleColors === true? <ColorMenu operationManager={props.operationManager} /> :null }
+        { visibleColors === true? <ColorMenu operationManager={props.operationManager} setVisibility={setColorVisibility} /> :null }
         </div>
 )
 }
