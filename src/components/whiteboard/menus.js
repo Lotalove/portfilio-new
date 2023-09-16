@@ -43,7 +43,7 @@ function DrawMenu(props){
             setColorVisibility(true)
         }}/>
         <Text
-        className= {props.drawingTool === "text"?styles.selected:null}
+        className= {drawingTool === "text"?styles.selected:null}
           id={styles.menuIcons} onClick={()=>{
           updateTool("text")
           setColorVisibility(false)

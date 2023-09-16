@@ -36,60 +36,53 @@ function Dropdown(props){
   )
   }
   
-function ColorOption(props){
-    var BC = props.Properties.currColor === props.color ? "medium solid white":"none" 
-    console.log(props.Properties.currColor)  
-    return(
-      <span className={classes.colorOption} style={{backgroundColor:props.color,border:BC}}
-      onClick={()=>{
-        OperationManager.CurrentColor = props.color
-        props.Properties.colorManager(props.color)
-      }}
-      ></span>
-    )
-  }
-
 var InsertDrop = <div className={classes.dropdown}>
 <p>Add Picture</p>
 </div> 
 
-function TextBox(props){
-    var ypos
-    var xpos = props.position.x > window.innerWidth -128 ?window.innerWidth-200:props.position.x 
-  return(
-    <div >
-      <div  id={classes.textSettings}>
-        <FontDropdown changeHandler={(event)=>{OperationManager.FontFamily = event.target.value}}/>
-        <FontSize changeHandler={(event)=>{OperationManager.FontSize = event.target.value +"px"}}/>
-        <div style={{alignSelf:"center"}}>
-        <Bold />
-        <Italic/>
-        <Bin onClick={()=>{
-          props.textFunctions.updateOverlay(null)
-        }}/>
-        </div>
-      </div>
-    <input id={classes.textBox}  style={{top:props.position.y,left:xpos}}  type='text' onKeyDown={(e)=>{
-      
-      if (e.keyCode === 13) {
-        var ctx = document.getElementById(classes.board)
-        ctx= ctx.getContext("2d")
-        var yComponent= props.position.y
-        var xComponent = props.position.x
-        ctx.font =  OperationManager.FontSize+ " " + OperationManager.FontFamily;
-        ctx.fillStyle = OperationManager.CurrentColor
-        ctx.fillText(e.target.value, xComponent,yComponent);
-        props.textFunctions.updateOverlay(null)  
-        props.textFunctions.save()      
-    }
-    }}></input>
+function TextBox(props){  
+  
+  var xpos = props.position.x > window.innerWidth -128 ?window.innerWidth-200:props.position.x 
+  console.log(props.textFunctions)
+
+    return(
+      <div >
+  <div  id={classes.textSettings}>
+    <FontDropdown changeHandler={(event)=>{OperationManager.FontFamily = event.target.value}}/>
+    <FontSize changeHandler={(event)=>{OperationManager.FontSize = event.target.value +"px"}}/>
+    <div style={{alignSelf:"center"}}>
+    <Bold />
+    <Italic/>
+    <Bin onClick={()=>{
+      props.textFunctions.updateOverlay(null)
+    }}/>
     </div>
+  </div>
+<input id={classes.textBox}  style={{top:props.position.y,left:xpos}}  type='text' 
+  onKeyDown={(e)=>{
+  if (e.keyCode === 13) {
+    var ctx = document.getElementById(classes.board)
+    ctx= ctx.getContext("2d")
+    var yComponent= props.position.y
+    var xComponent = props.position.x
+    ctx.font =  OperationManager.FontSize+ " " + OperationManager.FontFamily;
+    ctx.fillStyle = OperationManager.CurrentColor
+    ctx.fillText(e.target.value, xComponent,yComponent);
+    props.textFunctions.save()    
+    props.textFunctions.setActivityS(false)
+    props.textFunctions.updateOverlay(null)
+
+  }
+}}></input>
+</div>
+    
   )
 }
 
 function Canvas(props){
   var [overlayedElements,updateOverlay] = useState(null)
-
+  var [isTextboxActive,setTextboxActive] = useState(true)
+  
   function drawUploaded(image){
     var canvas = document.getElementById(classes.board)
       canvas = canvas.getContext("2d")
@@ -152,30 +145,35 @@ function Canvas(props){
         
         break;
       case "text":
-        var boxPosition = {
+          
+      var boxPosition = {
           x:OperationManager.CurentPosition.x,
           y: OperationManager.CurentPosition.y
         }
         var textFunctions={
           updateOverlay:updateOverlay,
-          save: saveCanvas
+          save: saveCanvas,
+          activityState:
+          isTextboxActive,
+          setActivityS:setTextboxActive
         }
+        
         var newBox = <TextBox position={boxPosition} textFunctions={textFunctions} ></TextBox>
         updateOverlay(newBox)
+        setTextboxActive(true)
         break
       case "shapes":
         console.log("drawing shape")
         
         break
       }
-
   } 
-  
 
+  var [canvasDimension,setDimensions] = useState({width:window.innerWidth,height:window.innerHeight})
   return(
-    <div>
-      {overlayedElements}
-    <canvas id={classes.board} width ={window.innerWidth} height={window.innerHeight} onPointerDown={(event)=>{
+    <div >
+      {isTextboxActive? overlayedElements: null}
+    <canvas id={classes.board} width ={canvasDimension.width} height={canvasDimension.height} onPointerDown={(event)=>{
       OperationManager.CurentPosition = {x:event.nativeEvent.layerX,y:event.nativeEvent.layerY}
       OperationHandler(event)
     }} 
@@ -235,8 +233,6 @@ export function Whiteboard () {
     var undone = canvasHistory.pop()
     undoHistory.push(undone)
     currentState = currentState-1
-    
-    
   }
 
   function Redo(){

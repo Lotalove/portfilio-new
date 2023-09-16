@@ -3,12 +3,10 @@
   background-color:white;
   z-index: 1;
   margin:0;
-  position: static;
   min-width: fit-content;
   display: block;
   touch-action: none;
   cursor: crosshair;
-  
 }
 
 .app{
@@ -17,6 +15,7 @@
   width: fit-content;
   overflow-y: hidden;
   user-zoom:none;
+  position: relative;
 }
 
 .menusContainer svg:hover {
@@ -26,7 +25,8 @@
 }
 
 @media only screen and (min-width: 768px) {
-.menusContainer{
+  /* For desktop: */
+  .menusContainer{
   display: flex;
   flex-direction:row;
   position: absolute;
