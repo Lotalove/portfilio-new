@@ -15,7 +15,7 @@
   width: fit-content;
   overflow-y: hidden;
   user-zoom:none;
-  
+  position:static;
 }
 
 .menusContainer svg:hover {
