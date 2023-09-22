@@ -1,6 +1,6 @@
 #navbar{
   width: 100vw;
-  height:8vh;
+  height: fit-content;
   position:sticky;
   top: 0;
   display: flex;
@@ -8,6 +8,7 @@
   justify-content: space-between;
   background-color: #1e1e1e; ;
   z-index: 1;
+  max-height:64px ; 
   }
 .links{
     display: flex;
@@ -54,7 +55,7 @@
       top: 2vh;
       width: 3rem;
       z-index: 3;
-      max-height: 8vh;
+         
     }
 
     @keyframes slideInFromLeft {

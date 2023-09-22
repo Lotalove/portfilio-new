@@ -142,10 +142,10 @@ export function Gameboard (props){
     }
 
     return(
-        <div style={{overflowY :"hidden", height:"90vh"}}>
+        <div >
             <Navbar></Navbar> 
             <TurnView turn={turn}></TurnView>
-            <div id={classes.board_container}>
+            <div style={{overflow:"hidden"}} id={classes.board_container}>
                 <div id={classes.gameboard}> 
                 {won[0] === true ? <WinScreen resetFunction ={resetGame} winner={won[1]}></WinScreen>:null} 
                     <Column clickHandler={clickHandler} num={0}/>

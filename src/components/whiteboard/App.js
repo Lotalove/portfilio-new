@@ -41,40 +41,39 @@ var InsertDrop = <div className={classes.dropdown}>
 </div> 
 
 function TextBox(props){  
-  
+
   var xpos = props.position.x > window.innerWidth -128 ?window.innerWidth-200:props.position.x 
-  console.log(props.textFunctions)
 
     return(
       <div >
-  <div  id={classes.textSettings}>
-    <FontDropdown changeHandler={(event)=>{OperationManager.FontFamily = event.target.value}}/>
-    <FontSize changeHandler={(event)=>{OperationManager.FontSize = event.target.value +"px"}}/>
-    <div style={{alignSelf:"center"}}>
-    <Bold />
-    <Italic/>
-    <Bin onClick={()=>{
-      props.textFunctions.updateOverlay(null)
-    }}/>
-    </div>
-  </div>
-<input id={classes.textBox}  style={{top:props.position.y,left:xpos}}  type='text' 
-  onKeyDown={(e)=>{
-  if (e.keyCode === 13) {
-    var ctx = document.getElementById(classes.board)
-    ctx= ctx.getContext("2d")
-    var yComponent= props.position.y
-    var xComponent = props.position.x
-    ctx.font =  OperationManager.FontSize+ " " + OperationManager.FontFamily;
-    ctx.fillStyle = OperationManager.CurrentColor
-    ctx.fillText(e.target.value, xComponent,yComponent);
-    props.textFunctions.save()    
-    props.textFunctions.setActivityS(false)
-    props.textFunctions.updateOverlay(null)
+        <div  id={classes.textSettings}>
+          <FontDropdown changeHandler={(event)=>{OperationManager.FontFamily = event.target.value}}/>
+          <FontSize changeHandler={(event)=>{OperationManager.FontSize = event.target.value +"px"}}/>
+          <div style={{alignSelf:"center"}}>
+          <Bold />
+          <Italic/>
+          <Bin onClick={()=>{
+            props.textFunctions.updateOverlay(null)
+          }}/>
+          </div>
+      </div>
+      <input id={classes.textBox}  style={{top:props.position.y,left:xpos}}  type='text' 
+      onKeyDown={(e)=>{
+      if (e.keyCode === 13) {
+        var ctx = document.getElementById(classes.board)
+        ctx= ctx.getContext("2d")
+        var yComponent= props.position.y
+        var xComponent = props.position.x
+        ctx.font =  OperationManager.FontSize+ " " + OperationManager.FontFamily;
+        ctx.fillStyle = OperationManager.CurrentColor
+        ctx.fillText(e.target.value, xComponent,yComponent);
+        props.textFunctions.save()    
+        props.textFunctions.setActivityS(false)
+        props.textFunctions.updateOverlay(null)
 
-  }
-}}></input>
-</div>
+      }
+    }}></input>
+    </div>
     
   )
 }
