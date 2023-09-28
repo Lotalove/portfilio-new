@@ -8,6 +8,7 @@ import {ReactComponent as Bin} from './icons/bin.svg'
 import { Navigate, useNavigate } from 'react-router-dom'
 
 import { Menu } from './menus'
+import { eventWrapper } from '@testing-library/user-event/dist/utils'
 
 var OperationManager = {
   CurrentTool :"pencil" ,
@@ -82,11 +83,11 @@ function Canvas(props){
   var [overlayedElements,updateOverlay] = useState(null)
   var [isTextboxActive,setTextboxActive] = useState(true)
   
-  function drawUploaded(image){
+  function drawUploaded(image,cordinates){
     var canvas = document.getElementById(classes.board)
       canvas = canvas.getContext("2d")
-      var imageX = OperationManager.CurentPosition.x - (image.width/2)
-      var imageY = OperationManager.CurentPosition.y - (image.height/2)
+      var imageX = cordinates.x - (image.width/2) 
+      var imageY = cordinates.y - (image.height/2) 
       canvas.drawImage(image,imageX,imageY)
       saveCanvas()
   }
@@ -182,14 +183,16 @@ function Canvas(props){
 
     onDrop={(e)=>{
       e.preventDefault()
+      
       const reader = new FileReader()
       reader.addEventListener("load",()=>{
         var imageData = reader.result 
         var image = new Image()
-        image.src = imageData
-        drawUploaded(image)
+        image.src = imageData  
+        drawUploaded(image,{x:e.clientX,y:e.clientY})
       })
       var file = e.dataTransfer.files[e.dataTransfer.files.length-1]
+      
       reader.readAsDataURL(file)
     }}
     onDragOver={(e)=>{
