@@ -9,8 +9,39 @@ import {ReactComponent as Eraser} from './icons/eraser.svg'
 import {ReactComponent as Shapes} from './icons/shapes.svg'
 import {ReactComponent as Text} from './icons/text.svg'
 import {ReactComponent as Close} from './icons/close.svg'
+import {ReactComponent as Square} from './icons/square-f.svg'
+import {ReactComponent as Triangle} from './icons/triangle-f.svg'
+import {ReactComponent as Arrow} from './icons/arrow-right.svg'
+import {ReactComponent as Circle} from './icons/circle-f.svg'
 import { useState } from 'react'
 import { useNavigate } from "react-router-dom";
+
+function ShapesMenu(props){
+  var [activeShape,setShape] = useState(null)
+  
+  function handleSelection(event){
+    
+    setShape(event.currentTarget.id)
+    props.operationManager.Shape = event.currentTarget.id
+    console.log(event.currentTarget.id)
+  }
+
+  return(
+    <div className={styles.menu} id={styles.shapeMenu}>
+      <div>
+      <Square className={activeShape === "Rectangle"?styles.selected:null} id="Rectangle"  onClick={handleSelection} />
+      <Triangle className={activeShape === "Triangle"?styles.selected:null} id="Triangle" onClick={handleSelection}/>
+      <Circle className={activeShape === "Circle"?styles.selected:null} id="Circle" onClick={handleSelection}/>
+      <Arrow className={activeShape === "Arrow"?styles.selected:null} id="Arrow" onClick={handleSelection} />
+      </div>
+
+      <div>
+      <label>Fill</label>
+      <input type='checkbox'></input>
+      </div>
+    </div>
+  )
+}
 
 function ColorMenu(props){
   return(
@@ -29,31 +60,42 @@ function ColorMenu(props){
 
 function DrawMenu(props){
   var [visibleColors,setColorVisibility] = useState(true)
+  var [shapeVis,setShapeVisibility] = useState(false)
   var updateTool = props.functions.updateTool
   var drawingTool = props.functions.drawingTool
+  
+  function resetStates(){
+    setColorVisibility(false)
+    setShapeVisibility(false)
+  }
   return(
     <div id={styles.toolContainer} >
         <div className={styles.menu} id={styles.toolMenu}>
         <Pencil className= {drawingTool === "pencil"?styles.selected:null} id={styles.menuIcons} onClick={()=>{
             updateTool("pencil") 
+            resetStates()
             setColorVisibility(true)
-        }}/>
+        }}/> 
         <Eraser className= {drawingTool === "eraser"?styles.selected:null} id={styles.menuIcons} onClick={()=>{
             updateTool("eraser")
+            resetStates()
             setColorVisibility(true)
         }}/>
         <Text
         className= {drawingTool === "text"?styles.selected:null}
           id={styles.menuIcons} onClick={()=>{
           updateTool("text")
-          setColorVisibility(false)
+          resetStates()
+          
         }}/>
         <Shapes style={{alignSelf:"center"}} className= {drawingTool === "shapes"?styles.selected:null} onClick={()=>{
             updateTool("shapes")
-            setColorVisibility(false)
+            resetStates()
+            setShapeVisibility(true)
         }}/>
         </div>
         { visibleColors === true? <ColorMenu operationManager={props.operationManager} setVisibility={setColorVisibility} /> :null }
+        {shapeVis === true? <ShapesMenu operationManager={props.operationManager}/>: null}
         </div>
 )
 }

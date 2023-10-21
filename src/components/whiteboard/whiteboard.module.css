@@ -42,18 +42,24 @@
   border-radius: 10px;
   height: fit-content;
   width: fit-content;
-  
 }
+
 #menuIcons{
   align-self: center;
   margin-bottom: 32px;
 }
+
 #toolMenu{
   height: fit-content;
   align-self: center;
   padding: 8px;
   display: flex;
   flex-direction:column ;
+}
+
+#shapeMenu{
+  margin-left: 8px;
+  padding: 8px;
 }
 
 #textSettings{
