@@ -4,6 +4,7 @@ import classes from "../styles/navbar.module.css"
 import logo from "../images/logo.jpg"
 import { useState } from "react";
 import MenuIcon from "../images/Menu.png"
+import resume from "../images/Resume.pdf"
 
 export function Navbar(props){
     return(
@@ -20,7 +21,7 @@ function Menu(){
     var expandedMenu = <div id={classes.expandedMenu}>
     <Link to="/"><p className={classes.link}>Home</p></Link>
     <Link className={classes.links} to="/projects"><p className={classes.link}>Projects</p> </Link>
-    <Link className={classes.links}to="/contact"><p className={classes.link}>Contact</p></Link>
+    <a href={resume} download="vinnyResume"> <p className={classes.link}>Resume</p> </a> 
   </div>
       return(
           <div onClick={async()=>{
