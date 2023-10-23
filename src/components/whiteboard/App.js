@@ -124,14 +124,14 @@ function Canvas(props){
     ctx.stroke()
   }
 
-  function drawTriangle(pos,sideLength){
+  function drawTriangle(pos,dimesions){
     var canvas = document.getElementById(classes.board)
     var ctx = canvas.getContext("2d")
     // if the user moves the cursor up
     
       var initialPoint = {x:pos.x, y:pos.y}
-      var secondPoint = {x:pos.x+sideLength,y:pos.y-sideLength}
-      var thirdPoint = {x:secondPoint.x+sideLength,y:secondPoint.y+sideLength}
+      var secondPoint = {x:pos.x+dimesions.base,y:pos.y + dimesions.height}
+      var thirdPoint = {x:secondPoint.x+dimesions.base,y:initialPoint.y}
     
     ctx.beginPath()
     ctx.moveTo(initialPoint.x,initialPoint.y)
@@ -244,8 +244,8 @@ function Canvas(props){
             props.canvasFunctions.undo()
             var newX = OperationManager.CurentPosition.x
             var newY = OperationManager.CurentPosition.y
-            var sideLength = ((-1)*(newY - yInitial))/2 + (newX- xInitial)/2    
-            drawTriangle({x:xInitial,y:yInitial},sideLength)
+            var dimensions = {base:newX - xInitial, height:newY - yInitial}    
+            drawTriangle({x:xInitial,y:yInitial},dimensions)
           },0);
           document.addEventListener('pointerup',finishDrawing)
         }
