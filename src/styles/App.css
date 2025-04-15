@@ -68,6 +68,7 @@ body{
 #featured{
   display: flex;
   flex-direction: column; 
+  overflow-x: scroll;
 }
 
 .preview{

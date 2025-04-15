@@ -1,4 +1,5 @@
 import { Navbar } from "./navbar"
+import workoutImg from '../images/workout_preview_img.jpg'
 import chessImg from '../images/WhitePawn.jpg' 
 import connectimg from "../images/connect4Logo.png"
 import boardImage from "../images/whiteboard.jpg"
@@ -45,6 +46,7 @@ export function Homepage(){
         <div id="featured">
         <h1>Featured <span style={{color:"#61DAFB"}}>Projects </span> </h1>
         <div id="showcase">
+        <Preview name="Workout App" img={workoutImg} link="https://github.com/Lotalove/Health-App" external={true}></Preview>
         <Preview name="Chess" img ={chessImg} link="/projects/chess"></Preview>
         <Preview name="Connect Four" img={connectimg} link="/projects/connect4"></Preview>
         <Preview name="Sketch Pad" img={boardImage} link="/projects/whiteboard"></Preview>
