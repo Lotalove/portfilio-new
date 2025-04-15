@@ -1,6 +1,6 @@
 body{
   background-color:#242222 ;
-  font-family:"Hind Siliguri";
+  font-family:"Alata";
   color: white;
   margin: 0;
   overflow: scroll;
@@ -136,3 +136,13 @@ a:visited{
 }
 
 
+.socials_link{
+  width: 40px;
+  margin-top: 16px;
+  margin-right: 16px;
+  transition: ease-in-out .5s;
+}
+
+.socials_link:hover{
+  transform: rotate(15deg);
+}

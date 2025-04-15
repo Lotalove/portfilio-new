@@ -1,9 +1,11 @@
 import { Navbar } from "./navbar"
 import chessImg from '../images/WhitePawn.jpg' 
-import connectimg from "../images/connect4.png"
+import connectimg from "../images/connect4Logo.png"
 import boardImage from "../images/whiteboard.jpg"
 import hourGlass from "../images/hourglass.jpg"
 import { Preview } from "./preview"
+import linkedInLogo from "../images/InBug-White.png"
+import githubLogo from "../images/github-mark-white.png"
 
 export function Homepage(){
     return(
@@ -18,17 +20,23 @@ export function Homepage(){
     }
     
     function Bio (){
+      var linkedInURL = "https://www.linkedin.com/in/vinny-ramos-60532126b/"
+      var githubURL = "https://github.com/Lotalove"
       return(
     <div id="bio">
       <div id="intro">
       <div id="portrait" >
       
       </div>
-        <h1>Hello I'm <span style={{color:"#61DAFB"}}>Vinny </span> ,</h1>
+      <div>
+      <a href= {linkedInURL} target="_blank"><img className="socials_link" src={linkedInLogo}></img></a>
+      <a href={githubURL} target="_blank"><img className="socials_link" src={githubLogo}></img></a>
+      </div>  
+        <h1>Hello, I'm <span style={{color:"#61DAFB"}}>Vinny</span>,</h1>
         </div>
-        <h3 style={{color:"#61DAFB",margin:0}}> Full Stack Developer</h3>
-        <p>a curious and self-motivated computer science student with web development experience looking to gain some professional experience while pursuing my degree. </p>
-        Check out some of my projects below!
+       
+        <p>a<span style={{color:"#61DAFB",margin:0}}> software engineer</span> experienced in the development of websites and web applications. I use JavaScript, React, and Node.js for my projects.</p>
+        Check some of them out below and on my github!
       </div>
       )
     }
