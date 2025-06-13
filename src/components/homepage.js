@@ -21,7 +21,7 @@ export function Homepage(){
     }
     
     function Bio (){
-      var linkedInURL = "https://www.linkedin.com/in/vinny-ramos-60532126b/"
+      var linkedInURL = "https://www.linkedin.com/in/vinny-ramos/"
       var githubURL = "https://github.com/Lotalove"
       return(
     <div id="bio">
